@@ -1,12 +1,6 @@
 package br.com.alura.adopetstore.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -17,6 +11,12 @@ public class Estoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer quantidade;
+    /*
+    A anotação indica para a JPA que este campo será usado para fazer um lock/bloqueio das transações realizadas com este objeto
+    Ver arquivo: D:\Arquivo\TecInfo\JPA\Lock Banco de Dados.txt
+     */
+    @Version //
+    private Integer versao;
     @OneToOne
     private Produto produto;
 
@@ -33,6 +33,10 @@ public class Estoque {
 
     public Integer getQuantidade() {
         return quantidade;
+    }
+
+    public Integer getVersao() {
+        return versao;
     }
 
     public Produto getProduto() {
