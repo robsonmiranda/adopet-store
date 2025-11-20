@@ -12,24 +12,23 @@ public class EnviadorEmail {
     @Autowired
     private JavaMailSender emailSender;
 
-    @Async // Identifica o método que será executado em uma thread separada
+    @Async // Identifica o método que será executado em uma thread separada (cria uma thread para a execução do método)
     public void enviarEmail(String assunto, String destinatario, String textoEmail) {
         try {
-//            Código para envio de email real
-//            var email = new SimpleMailMessage();
-//            email.setFrom("adopet@email.com.br");
-//            email.setSubject(assunto);
-//            email.setTo(destinatario);
-//            email.setText(textoEmail);
-//            emailSender.send(email);
+            // Código para envio de email real
+            var email = new SimpleMailMessage();
+            email.setFrom("adopet@email.com.br");
+            email.setSubject("Teste Envio Email");
+            email.setTo("rmatosm@yahoo.com.br");
+            email.setText("Teste email");
+            emailSender.send(email);
             System.out.println("Enviando email!");
             System.out.println(textoEmail);
 
-            //Simulando demora de 3 segundos para enviar email
-            Thread.sleep(3000);
+//            //Simulando demora de 3 segundos para enviar email
+//            Thread.sleep(3000);
 
         } catch (Exception e) {
-
             throw new RuntimeException("Erro ao enviar email!", e);
         }
     }
