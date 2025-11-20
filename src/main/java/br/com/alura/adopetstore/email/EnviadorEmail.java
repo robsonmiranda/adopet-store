@@ -12,6 +12,7 @@ public class EnviadorEmail {
     @Autowired
     private JavaMailSender emailSender;
 
+    @Async // Identifica o método que será executado em uma thread separada
     public void enviarEmail(String assunto, String destinatario, String textoEmail) {
         try {
 //            Código para envio de email real
