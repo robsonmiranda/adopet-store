@@ -11,7 +11,7 @@ public class EmailPedidoRealizado {
     @Autowired
     private EnviadorEmail enviador;
 
-    @Async // Identifica o método que será executado em uma thread separada (cria uma thread para a execução do método)
+    @Async("asyncExecutor")
     public void enviar(PedidoDTO dto, Usuario usuario){
         enviador.enviarEmail(
                 "Pedido efetuado com sucesso na Adopet Store",
