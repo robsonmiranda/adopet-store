@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -19,6 +20,8 @@ public class AgendamentoService {
     public void envioEmailsAgendados() {
         var estoqueZerado = relatorioService.infoEstoque();
         var faturamentoObtido = relatorioService.faturamentoObtido();
+        // Sincroniza a execução das threads, fazendo com que a execução somente continue após a conclusão de todas as threads listadas
+        CompletableFuture.allOf(estoqueZerado, faturamentoObtido).join();
         try {
             emailRelatorioGerado.enviar(estoqueZerado.get(), faturamentoObtido.get());
         } catch (InterruptedException | ExecutionException e) {
