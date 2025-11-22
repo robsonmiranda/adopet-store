@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.ExecutionException;
+
 @Service
 public class AgendamentoService {
 
@@ -17,7 +19,11 @@ public class AgendamentoService {
     public void envioEmailsAgendados() {
         var estoqueZerado = relatorioService.infoEstoque();
         var faturamentoObtido = relatorioService.faturamentoObtido();
-        emailRelatorioGerado.enviar(estoqueZerado, faturamentoObtido);
+        try {
+            emailRelatorioGerado.enviar(estoqueZerado.get(), faturamentoObtido.get());
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println(estoqueZerado);
         System.out.println(faturamentoObtido);
         // Informa a thread usada no agendamento, que é diferente da principal
